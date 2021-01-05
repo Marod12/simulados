@@ -29,21 +29,19 @@ async function handler(req, res) {
 
     const client = new MongoClient(process.env.Mongo_URI);
 
-    async () => {
-        try {
-            await client.connect();
-            const database = client.db(process.env.Mongo_DB);
-            const collection = database.collection("questoes");
+    try {
+        await client.connect();
+        const database = client.db(process.env.Mongo_DB);
+        const collection = database.collection("questoes");
 
-            const result = await collection.find({ user: { $eq: new ObjectID(user_id) } }).toArray();
+        const result = await collection.find({ user: { $eq: new ObjectID(user_id) } }).toArray();
 
-            res.json(result);
-            
-        } catch(err) {
-          console.dir(err)
-        } finally {
-            await client.close();
-        }
+        res.json(result);
+        
+    } catch(err) {
+      console.dir(err)
+    } finally {
+        await client.close();
     }
 }
 

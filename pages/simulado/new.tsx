@@ -23,6 +23,9 @@ export default function NovoSimuladoPage() {
     const [qNull, setQNull] = useState([]);
     const [qCorretas, setQCorretas] = useState([]);
     const [qErradas, setQErradas] = useState([]);
+    const [styleStartSimulado, setStyleStartSimulado] = useState('');
+    const [styleDadosSimulado, setStyleDadosSimulado] = useState('');
+    const [styleEndSimulado, setStyleEndSimulado] = useState('');
 
     const userId = process.browser ? localStorage.getItem('userId') : '';
 
@@ -42,11 +45,14 @@ export default function NovoSimuladoPage() {
     function startSimulado(e) {
       e.preventDefault();
 
-      const form = document.querySelector('form[name="startSimulado"]');
-      form.style.display = 'none';
+      /*const form = document.querySelector('form[name="startSimulado"]');
+      form.style.display = 'none';*/
+      setStyleStartSimulado('none');
 
-      const formSimulado = document.querySelector('form[name="dadosSimulado"]');
-      formSimulado.style.display = 'flex';
+      /*const formSimulado = document.querySelector('form[name="dadosSimulado"]');
+      formSimulado.style.display = 'flex';*/
+      setStyleDadosSimulado('flex');
+      
 
       //** Sortea as questões */
       const questoesSorteadas = [];
@@ -72,11 +78,13 @@ export default function NovoSimuladoPage() {
     function endSimulado(e) {
       e.preventDefault();
 
-      const formSimulado = document.querySelector('form[name="dadosSimulado"]');
-      formSimulado.style.display = 'none';
+      /*const formSimulado = document.querySelector('form[name="dadosSimulado"]');
+      formSimulado.style.display = 'none'; */
+      setStyleDadosSimulado('none');
 
-      const form = document.querySelector('.finalizado');
-      form.style.display = 'flex';
+      /*const form = document.querySelector('.finalizado');
+      form.style.display = 'flex';*/
+      setStyleEndSimulado('flex');
 
       /* 
       const resps = document.querySelector('input[name="5ff064ca8b0a7407ec133bec"]:checked');
@@ -149,6 +157,7 @@ export default function NovoSimuladoPage() {
 
           <form className="flex flex-col items-center justify-center gap-1 h-screen"
             name="startSimulado"
+            style={{display: styleStartSimulado}}
             onSubmit={startSimulado}>
             <h1 className="mb-10 text-7xl md:text-9xl text-black text-center">
               Simulado
@@ -181,6 +190,7 @@ export default function NovoSimuladoPage() {
 
           <form className="mt-16 hidden flex-1 flex-col items-center justify-center gap-1"
             name="dadosSimulado"
+            style={{display: styleDadosSimulado}}
             onSubmit={endSimulado}>
 
             {questoesSimulado.map(questao => (
@@ -199,7 +209,7 @@ export default function NovoSimuladoPage() {
                             id={`${questao._id}-1`} className="inputRadio hidden" />
                           <label id="labelRadio"
                             className="w-40 block mx-auto focus:outline-none py-2 px-5 rounded-lg shadow-sm text-center text-gray-600 bg-white hover:bg-gray-100 font-medium border" 
-                            for={`${questao._id}-1`}>
+                            htmlFor={`${questao._id}-1`}>
                               Certo
                           </label>
                         </div>
@@ -209,7 +219,7 @@ export default function NovoSimuladoPage() {
                             id={`${questao._id}-2`} className="inputRadio hidden" />
                           <label id="labelRadio"
                             className="w-40 block mx-auto focus:outline-none py-2 px-5 rounded-lg shadow-sm text-center text-gray-600 bg-white hover:bg-gray-100 font-medium border" 
-                            for={`${questao._id}-2`}>
+                            htmlFor={`${questao._id}-2`}>
                               Errado
                           </label>
                         </div>
@@ -223,7 +233,7 @@ export default function NovoSimuladoPage() {
                             id={`${questao._id}-1`} className="inputRadio hidden" />
                           <label id="labelRadio"
                             className="w-40 block mx-auto focus:outline-none py-2 px-5 rounded-lg shadow-sm text-center text-gray-600 bg-white hover:bg-gray-100 font-medium border" 
-                            for={`${questao._id}-1`}>
+                            htmlFor={`${questao._id}-1`}>
                               Certo
                           </label>
                         </div>
@@ -233,7 +243,7 @@ export default function NovoSimuladoPage() {
                             id={`${questao._id}-2`} className="inputRadio hidden" />
                           <label id="labelRadio"
                             className="w-40 block mx-auto focus:outline-none py-2 px-5 rounded-lg shadow-sm text-center text-gray-600 bg-white hover:bg-gray-100 font-medium border" 
-                            for={`${questao._id}-2`}>
+                            htmlFor={`${questao._id}-2`}>
                               Errado
                           </label>
                         </div>
@@ -247,7 +257,7 @@ export default function NovoSimuladoPage() {
                             id={`${questao._id}-1`} className="inputRadio hidden" />
                           <label id="labelRadio"
                             className="w-16 md:w-24 block mx-auto focus:outline-none py-2 px-5 rounded-lg shadow-sm text-center text-gray-600 bg-white hover:bg-gray-100 font-medium border" 
-                            for={`${questao._id}-1`}>
+                            htmlFor={`${questao._id}-1`}>
                               A
                           </label>
                         </div>
@@ -257,7 +267,7 @@ export default function NovoSimuladoPage() {
                             id={`${questao._id}-2`} className="inputRadio hidden" />
                           <label id="labelRadio"
                             className="w-16 md:w-24 block mx-auto focus:outline-none py-2 px-5 rounded-lg shadow-sm text-center text-gray-600 bg-white hover:bg-gray-100 font-medium border" 
-                            for={`${questao._id}-2`}>
+                            htmlFor={`${questao._id}-2`}>
                               B
                           </label>
                         </div>
@@ -267,7 +277,7 @@ export default function NovoSimuladoPage() {
                             id={`${questao._id}-3`} className="inputRadio hidden" />
                           <label id="labelRadio"
                             className="w-16 md:w-24 block mx-auto focus:outline-none py-2 px-5 rounded-lg shadow-sm text-center text-gray-600 bg-white hover:bg-gray-100 font-medium border" 
-                            for={`${questao._id}-3`}>
+                            htmlFor={`${questao._id}-3`}>
                               C
                           </label>
                         </div>
@@ -277,7 +287,7 @@ export default function NovoSimuladoPage() {
                             id={`${questao._id}-4`} className="inputRadio hidden" />
                           <label id="labelRadio"
                             className="w-16 md:w-24 block mx-auto focus:outline-none py-2 px-5 rounded-lg shadow-sm text-center text-gray-600 bg-white hover:bg-gray-100 font-medium border" 
-                            for={`${questao._id}-4`}>
+                            htmlFor={`${questao._id}-4`}>
                               D
                           </label>
                         </div>
@@ -287,7 +297,7 @@ export default function NovoSimuladoPage() {
                             id={`${questao._id}-5`} className="inputRadio hidden" />
                           <label id="labelRadio"
                             className="w-16 md:w-24 block mx-auto focus:outline-none py-2 px-5 rounded-lg shadow-sm text-center text-gray-600 bg-white hover:bg-gray-100 font-medium border" 
-                            for={`${questao._id}-5`}>
+                            htmlFor={`${questao._id}-5`}>
                               E
                           </label>
                         </div>
@@ -305,7 +315,8 @@ export default function NovoSimuladoPage() {
             </button>
           </form>
 
-          <section className="finalizado hidden overflow-hidden flex-col items-center justify-center gap-1 h-screen">
+          <section className="finalizado hidden overflow-hidden flex-col items-center justify-center gap-1 h-screen"
+            style={{display: styleEndSimulado}}>
             <div className="bg-white rounded-lg p-10 flex items-center shadow justify-center">
               <div>
                 <svg className="mb-4 h-20 w-20 text-green-500 mx-auto" viewBox="0 0 20 20" fill="currentColor">  <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg>

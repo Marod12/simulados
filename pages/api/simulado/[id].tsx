@@ -36,45 +36,41 @@ async function handler(req, res) {
     switch (method) {
       // Get
       case 'GET':
-        async () => {
-          try {
-              await client.connect();
-              const database = client.db(process.env.Mongo_DB);
-              const collection = database.collection("simulado");
-  
-              const result = await collection.findOne({ _id: { $eq: idObj } });
-            
-              res.json(result);
-          } catch(err) {
-            console.dir(err)
-          } finally {
-              await client.close();
-          }
+        try {
+            await client.connect();
+            const database = client.db(process.env.Mongo_DB);
+            const collection = database.collection("simulado");
+
+            const result = await collection.findOne({ _id: { $eq: idObj } });
+          
+            res.json(result);
+        } catch(err) {
+          console.dir(err)
+        } finally {
+            await client.close();
         }
         break
       // DELETE
       case 'DELETE':
-        async () => {
-            try {
-                await client.connect();
-                const database = client.db(process.env.Mongo_DB);
-                const collection = database.collection("simulado");
-    
-                const question_id = await collection.findOne({ _id: { $eq: idObj } });
-                
-                if ( question_id.user !== user_id ) {
-                    res.status(401).json({ error: 'Operation not permitted.' });
-                }
+        try {
+            await client.connect();
+            const database = client.db(process.env.Mongo_DB);
+            const collection = database.collection("simulado");
 
-                await collection.deleteOne({ _id: { $eq: idObj } });
-                
-                res.status(204).send();
-
-            } catch(err) {
-              console.dir(err)
-            } finally {
-                await client.close();
+            const question_id = await collection.findOne({ _id: { $eq: idObj } });
+            
+            if ( question_id.user !== user_id ) {
+                res.status(401).json({ error: 'Operation not permitted.' });
             }
+
+            await collection.deleteOne({ _id: { $eq: idObj } });
+            
+            res.status(204).send();
+
+        } catch(err) {
+          console.dir(err)
+        } finally {
+            await client.close();
         }
         break
       default:

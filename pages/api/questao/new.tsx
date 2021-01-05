@@ -27,21 +27,19 @@ async function handler(req, res) {
     const { MongoClient } = require("mongodb");
 
     const client = new MongoClient(process.env.Mongo_URI);
+    
+    try {
+        await client.connect();
+        const database = client.db(process.env.Mongo_DB);
+        const collection = database.collection("questoes");
+        await collection.insertOne(doc);
 
-    async () => {
-        try {
-            await client.connect();
-            const database = client.db(process.env.Mongo_DB);
-            const collection = database.collection("questoes");
-            await collection.insertOne(doc);
-
-            //res.json(result.ops[0]);
-            res.json({ menssage: 'Questão adicionada com sucesso' });
-        } catch(err) {
-          console.dir(err)
-        } finally {
-            await client.close();
-        }
+        //res.json(result.ops[0]);
+        res.json({ menssage: 'Questão adicionada com sucesso' });
+    } catch(err) {
+      console.dir(err)
+    } finally {
+        await client.close();
     }
 }
 

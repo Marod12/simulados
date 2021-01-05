@@ -93,7 +93,7 @@ export default function EditarQuestao() {
           
           <textarea className="outline-none w-10/12 p-6 text-sm text-black placeholder-gray-700 border-gray-200 resize-y border rounded-md shadow-md" 
               required
-              rows="12"
+              rows={12}
               value={questao}
               onChange={e => setQuestao(e.target.value)}>
           </textarea>
@@ -127,7 +127,7 @@ export default function EditarQuestao() {
                     id="resposta-1" className="inputRadio hidden" onChange={e => setResposta(e.target.value)} />
                   <label id="labelRadio"
                     className="w-40 block mx-auto focus:outline-none py-2 px-5 rounded-lg shadow-sm text-center text-gray-600 bg-white hover:bg-gray-100 font-medium border" 
-                    for="resposta-1">
+                    htmlFor="resposta-1">
                       Certo
                   </label>
                 </div>
@@ -137,7 +137,7 @@ export default function EditarQuestao() {
                     id="resposta-2" className="inputRadio hidden" onChange={e => setResposta(e.target.value)} />
                   <label id="labelRadio"
                     className="w-40 block mx-auto focus:outline-none py-2 px-5 rounded-lg shadow-sm text-center text-gray-600 bg-white hover:bg-gray-100 font-medium border" 
-                    for="resposta-2">
+                    htmlFor="resposta-2">
                       Errado
                   </label>
                 </div>
@@ -151,7 +151,7 @@ export default function EditarQuestao() {
                     id="resposta-3" className="inputRadio hidden" onChange={e => setResposta(e.target.value)} />
                   <label id="labelRadio"
                     className="w-16 md:w-24 block mx-auto focus:outline-none py-2 px-5 rounded-lg shadow-sm text-center text-gray-600 bg-white hover:bg-gray-100 font-medium border" 
-                    for="resposta-3">
+                    htmlFor="resposta-3">
                       A
                   </label>
                 </div>
@@ -161,7 +161,7 @@ export default function EditarQuestao() {
                     id="resposta-4" className="inputRadio hidden" onChange={e => setResposta(e.target.value)} />
                   <label id="labelRadio"
                     className="w-16 md:w-24 block mx-auto focus:outline-none py-2 px-5 rounded-lg shadow-sm text-center text-gray-600 bg-white hover:bg-gray-100 font-medium border" 
-                    for="resposta-4">
+                    htmlFor="resposta-4">
                       B
                   </label>
                 </div>
@@ -171,7 +171,7 @@ export default function EditarQuestao() {
                     id="resposta-5" className="inputRadio hidden" onChange={e => setResposta(e.target.value)} />
                   <label id="labelRadio"
                     className="w-16 md:w-24 block mx-auto focus:outline-none py-2 px-5 rounded-lg shadow-sm text-center text-gray-600 bg-white hover:bg-gray-100 font-medium border" 
-                    for="resposta-5">
+                    htmlFor="resposta-5">
                       C
                   </label>
                 </div>
@@ -181,7 +181,7 @@ export default function EditarQuestao() {
                     id="resposta-6" className="inputRadio hidden" onChange={e => setResposta(e.target.value)} />
                   <label id="labelRadio"
                     className="w-16 md:w-24 block mx-auto focus:outline-none py-2 px-5 rounded-lg shadow-sm text-center text-gray-600 bg-white hover:bg-gray-100 font-medium border" 
-                    for="resposta-6">
+                    htmlFor="resposta-6">
                       D
                   </label>
                 </div>
@@ -191,7 +191,7 @@ export default function EditarQuestao() {
                     id="resposta-7" className="inputRadio hidden" onChange={e => setResposta(e.target.value)} />
                   <label id="labelRadio"
                     className="w-16 md:w-24 block mx-auto focus:outline-none py-2 px-5 rounded-lg shadow-sm text-center text-gray-600 bg-white hover:bg-gray-100 font-medium border" 
-                    for="resposta-7">
+                    htmlFor="resposta-7">
                       E
                   </label>
                 </div>

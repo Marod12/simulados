@@ -27,26 +27,25 @@ async function handler(req, res) {
     const { MongoClient } = require("mongodb");
 
     const client = new MongoClient(process.env.Mongo_URI);
+    
+    try {
+        await client.connect();
+        const database = client.db(process.env.Mongo_DB);
+        const collection = database.collection("users");
 
-    async () => {
-        try {
-            await client.connect();
-            const database = client.db(process.env.Mongo_DB);
-            const collection = database.collection("users");
+        const result = await collection.findOne({ code: { $eq: code } });
 
-            const result = await collection.findOne({ code: { $eq: code } });
-
-            if (!result) {
-                res.status(400).json({ error: 'Não encotramos nenhum usuario com esse Código' });
-            }
-
-            res.json(result)
-        } catch(err) {
-          console.dir(err)
-        } finally {
-            await client.close();
+        if (!result) {
+            res.status(400).json({ error: 'Não encotramos nenhum usuario com esse Código' });
         }
+
+        res.json(result)
+    } catch(err) {
+      console.dir(err)
+    } finally {
+        await client.close();
     }
+    
 }
 
 export default handler;

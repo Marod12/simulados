@@ -36,60 +36,53 @@ async function handler(req, res) {
     switch (method) {
       // Get
       case 'GET':
-        async () => {
-          try {
-              await client.connect();
-              const database = client.db(process.env.Mongo_DB);
-              const collection = database.collection("questoes");
-  
-              const result = await collection.findOne({ _id: { $eq: idObj } });
+        try {
+            await client.connect();
+            const database = client.db(process.env.Mongo_DB);
+            const collection = database.collection("questoes");
 
-              res.json(result)
-          } catch(err) {
-            console.dir(err)
-          } finally {
-              await client.close();
-          }
+            const result = await collection.findOne({ _id: { $eq: idObj } });
+
+            res.json(result)
+        } catch(err) {
+          console.dir(err)
+        } finally {
+            await client.close();
         }
-
         break
       // Update 
       case 'PUT':
         const { questao, resposta, materia } = req.body;
         
-        async () => {
-          try {
-              await client.connect();
-              const database = client.db(process.env.Mongo_DB);
-              const collection = database.collection("questoes");
-  
-              await collection.updateOne( { _id: { $eq: idObj } }, {$set: { questao: questao, resposta: resposta, materia: materia }}, { multi: true } );
-              
-              const result = await collection.findOne({ _id: { $eq: idObj } });
-              res.json(result)
-          } catch(err) {
-            console.dir(err)
-          } finally {
-              await client.close();
-          }
-        }
-        break
-      // DELETE
-      case 'DELETE':
-        async () => {
-          try{
+        try {
             await client.connect();
             const database = client.db(process.env.Mongo_DB);
             const collection = database.collection("questoes");
 
-            await collection.deleteOne({ _id: { $eq: idObj } });
-            res.status(200).json({ message: 'Questão deletada com sucesso'});
-          } catch(err) {
-            console.dir(err)
-          } finally {
-              await client.close();
-          }
-        } 
+            await collection.updateOne( { _id: { $eq: idObj } }, {$set: { questao: questao, resposta: resposta, materia: materia }}, { multi: true } );
+            
+            const result = await collection.findOne({ _id: { $eq: idObj } });
+            res.json(result)
+        } catch(err) {
+          console.dir(err)
+        } finally {
+            await client.close();
+        }
+        break
+      // DELETE
+      case 'DELETE':
+        try{
+          await client.connect();
+          const database = client.db(process.env.Mongo_DB);
+          const collection = database.collection("questoes");
+
+          await collection.deleteOne({ _id: { $eq: idObj } });
+          res.status(200).json({ message: 'Questão deletada com sucesso'});
+        } catch(err) {
+          console.dir(err)
+        } finally {
+            await client.close();
+        }
         break
       default:
         res.setHeader('Allow', ['GET', 'PUT', 'DELETE'])
