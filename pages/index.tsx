@@ -1,6 +1,5 @@
 import Head from 'next/head'
 import Link from 'next/link'
-import { motion } from 'framer-motion'
 import { FiLogIn } from 'react-icons/fi'
 import axios from 'axios'
 import { useState } from 'react';

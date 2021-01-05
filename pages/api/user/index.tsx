@@ -30,7 +30,7 @@ async function handler(req, res) {
 
     const client = new MongoClient(process.env.Mongo_URI);
 
-    async function run() {
+    async () => {
         try {
             await client.connect();
             const database = client.db(process.env.Mongo_DB);
@@ -38,12 +38,12 @@ async function handler(req, res) {
             await collection.insertOne(doc);
 
             res.json({ code })
+        } catch(err) {
+          console.dir(err)
         } finally {
             await client.close();
         }
     }
-
-    run().catch(console.dir);
 }
 
 export default handler;

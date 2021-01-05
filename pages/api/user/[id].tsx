@@ -41,7 +41,7 @@ async function handler(req, res) {
           break;
         }
 
-        async function runGet() {
+        async () => {
           try {
               await client.connect();
               const database = client.db(process.env.Mongo_DB);
@@ -50,17 +50,18 @@ async function handler(req, res) {
               const result = await collection.findOne({ _id: { $eq: idObj } });
 
               res.json(result)
+          } catch(err) {
+            console.dir(err)
           } finally {
               await client.close();
           }
         }
-        runGet().catch(console.dir);
         break
       // Update 
       case 'PUT':
         const { name } = req.body;
         
-        async function runUpdate() {
+        async () => {
           try {
               await client.connect();
               const database = client.db(process.env.Mongo_DB);
@@ -70,17 +71,17 @@ async function handler(req, res) {
               
               const result = await collection.findOne({ _id: { $eq: idObj } });
               res.json(result)
+          } catch(err) {
+            console.dir(err)
           } finally {
               await client.close();
           }
         }
-        runUpdate().catch(console.dir);
-        
         break
       // DELETE
       case 'DELETE':
         if ( id === user_id ) {
-          async function runDelete() {
+          async () => {
             try {
                 await client.connect();
                 const database = client.db(process.env.Mongo_DB);
@@ -89,11 +90,12 @@ async function handler(req, res) {
                 await collection.deleteOne({ _id: { $eq: idObj } });
                 res.status(200).json({ message: 'Deletado com sucesso' });
 
+            } catch(err) {
+              console.dir(err)
             } finally {
                 await client.close();
             }
           }
-          runDelete().catch(console.dir);
           break
         } 
         res.status(401).json({ error: 'Erro ao deletar'});

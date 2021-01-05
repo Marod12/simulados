@@ -36,35 +36,25 @@ async function handler(req, res) {
     switch (method) {
       // Get
       case 'GET':
-        async function runGet() {
+        async () => {
           try {
               await client.connect();
               const database = client.db(process.env.Mongo_DB);
               const collection = database.collection("simulado");
   
               const result = await collection.findOne({ _id: { $eq: idObj } });
-              /*const result = await collection.aggregate([ 
-                { $match: { _id: { $eq: idObj } } },
-                 {
-                  $lookup: {
-                      from: 'questoes',
-                      localField: 'qSimulado',
-                      foreignField: '_id',
-                      as: 'detailQuestao'
-                  } } 
-              ]).toArray(); */
-
-              //console.log(result);
+            
               res.json(result);
+          } catch(err) {
+            console.dir(err)
           } finally {
               await client.close();
           }
         }
-        runGet().catch(console.dir);
         break
       // DELETE
       case 'DELETE':
-        async function runDelete() {
+        async () => {
             try {
                 await client.connect();
                 const database = client.db(process.env.Mongo_DB);
@@ -80,11 +70,12 @@ async function handler(req, res) {
                 
                 res.status(204).send();
 
+            } catch(err) {
+              console.dir(err)
             } finally {
                 await client.close();
             }
         }
-        runDelete().catch(console.dir);
         break
       default:
         res.setHeader('Allow', ['GET', 'PUT', 'DELETE'])

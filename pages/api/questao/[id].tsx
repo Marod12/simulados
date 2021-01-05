@@ -36,7 +36,7 @@ async function handler(req, res) {
     switch (method) {
       // Get
       case 'GET':
-        async function runGet() {
+        async () => {
           try {
               await client.connect();
               const database = client.db(process.env.Mongo_DB);
@@ -45,18 +45,19 @@ async function handler(req, res) {
               const result = await collection.findOne({ _id: { $eq: idObj } });
 
               res.json(result)
+          } catch(err) {
+            console.dir(err)
           } finally {
               await client.close();
           }
         }
-        runGet().catch(console.dir);
 
         break
       // Update 
       case 'PUT':
         const { questao, resposta, materia } = req.body;
         
-        async function runUpdate() {
+        async () => {
           try {
               await client.connect();
               const database = client.db(process.env.Mongo_DB);
@@ -66,16 +67,16 @@ async function handler(req, res) {
               
               const result = await collection.findOne({ _id: { $eq: idObj } });
               res.json(result)
+          } catch(err) {
+            console.dir(err)
           } finally {
               await client.close();
           }
         }
-        runUpdate().catch(console.dir);
-        
         break
       // DELETE
       case 'DELETE':
-        async function runDelete() {
+        async () => {
           try{
             await client.connect();
             const database = client.db(process.env.Mongo_DB);
@@ -83,11 +84,12 @@ async function handler(req, res) {
 
             await collection.deleteOne({ _id: { $eq: idObj } });
             res.status(200).json({ message: 'Questão deletada com sucesso'});
+          } catch(err) {
+            console.dir(err)
           } finally {
               await client.close();
           }
         } 
-        runDelete().catch(console.dir);
         break
       default:
         res.setHeader('Allow', ['GET', 'PUT', 'DELETE'])
