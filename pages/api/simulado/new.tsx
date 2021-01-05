@@ -67,7 +67,7 @@ async function handler(req, res) {
 
     const { MongoClient } = require("mongodb");
 
-    const client = new MongoClient(process.env.MONGO_URI);
+    const client = new MongoClient(process.env.MONGO_URL);
     
     try {
         await client.connect();
