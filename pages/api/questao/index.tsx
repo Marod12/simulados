@@ -27,11 +27,11 @@ async function handler(req, res) {
 
     const { MongoClient } = require("mongodb");
 
-    const client = new MongoClient(process.env.Mongo_URI);
+    const client = new MongoClient(process.env.MONGO_URI);
 
     try {
         await client.connect();
-        const database = client.db(process.env.Mongo_DB);
+        const database = client.db('simulados');
         const collection = database.collection("questoes");
 
         const result = await collection.find({ user: { $eq: new ObjectID(user_id) } }).toArray();

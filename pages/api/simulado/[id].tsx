@@ -28,7 +28,7 @@ async function handler(req, res) {
 
     const { MongoClient } = require("mongodb");
   
-    const client = new MongoClient(process.env.Mongo_URI);
+    const client = new MongoClient(process.env.MONGO_URI);
 
     const user_id = req.headers.authorization;
     const idObj = new ObjectID(id);
@@ -38,7 +38,7 @@ async function handler(req, res) {
       case 'GET':
         try {
             await client.connect();
-            const database = client.db(process.env.Mongo_DB);
+            const database = client.db('simulados');
             const collection = database.collection("simulado");
 
             const result = await collection.findOne({ _id: { $eq: idObj } });
@@ -54,7 +54,7 @@ async function handler(req, res) {
       case 'DELETE':
         try {
             await client.connect();
-            const database = client.db(process.env.Mongo_DB);
+            const database = client.db('simulados');
             const collection = database.collection("simulado");
 
             const question_id = await collection.findOne({ _id: { $eq: idObj } });

@@ -28,12 +28,12 @@ async function handler(req, res) {
 
     const { MongoClient } = require("mongodb");
 
-    const client = new MongoClient(process.env.Mongo_URI);
+    const client = new MongoClient(process.env.MONGO_URI);
 
     async () => {
         try {
             await client.connect();
-            const database = client.db(process.env.Mongo_DB);
+            const database = client.db('simulados');
             const collection = database.collection("users");
             await collection.insertOne(doc);
 
