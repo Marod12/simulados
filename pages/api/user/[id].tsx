@@ -41,60 +41,54 @@ async function handler(req, res) {
           break;
         }
 
-        async () => {
-          try {
-              await client.connect();
-              const database = client.db('simulados');
-              const collection = database.collection("users");
-  
-              const result = await collection.findOne({ _id: { $eq: idObj } });
+        try {
+            await client.connect();
+            const database = client.db('simulados');
+            const collection = database.collection("users");
 
-              res.json(result)
-          } catch(err) {
-            console.dir(err)
-          } finally {
-              await client.close();
-          }
+            const result = await collection.findOne({ _id: { $eq: idObj } });
+
+            res.json(result)
+        } catch(err) {
+          console.dir(err)
+        } finally {
+            await client.close();
         }
         break
       // Update 
       case 'PUT':
         const { name } = req.body;
         
-        async () => {
-          try {
-              await client.connect();
-              const database = client.db('simulados');
-              const collection = database.collection("users");
-  
-              await collection.updateOne( { _id: { $eq: idObj } }, {$set: { name: name }}, { multi: true } );
-              
-              const result = await collection.findOne({ _id: { $eq: idObj } });
-              res.json(result)
-          } catch(err) {
-            console.dir(err)
-          } finally {
-              await client.close();
-          }
+        try {
+            await client.connect();
+            const database = client.db('simulados');
+            const collection = database.collection("users");
+
+            await collection.updateOne( { _id: { $eq: idObj } }, {$set: { name: name }}, { multi: true } );
+            
+            const result = await collection.findOne({ _id: { $eq: idObj } });
+            res.json(result)
+        } catch(err) {
+          console.dir(err)
+        } finally {
+            await client.close();
         }
         break
       // DELETE
       case 'DELETE':
         if ( id === user_id ) {
-          async () => {
-            try {
-                await client.connect();
-                const database = client.db('simulados');
-                const collection = database.collection("users");
+          try {
+              await client.connect();
+              const database = client.db('simulados');
+              const collection = database.collection("users");
 
-                await collection.deleteOne({ _id: { $eq: idObj } });
-                res.status(200).json({ message: 'Deletado com sucesso' });
+              await collection.deleteOne({ _id: { $eq: idObj } });
+              res.status(200).json({ message: 'Deletado com sucesso' });
 
-            } catch(err) {
-              console.dir(err)
-            } finally {
-                await client.close();
-            }
+          } catch(err) {
+            console.dir(err)
+          } finally {
+              await client.close();
           }
           break
         } 

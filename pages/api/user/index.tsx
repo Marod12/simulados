@@ -29,20 +29,18 @@ async function handler(req, res) {
     const { MongoClient } = require("mongodb");
 
     const client = new MongoClient(process.env.MONGO_URL);
+    
+    try {
+        await client.connect();
+        const database = client.db('simulados');
+        const collection = database.collection("users");
+        await collection.insertOne(doc);
 
-    async () => {
-        try {
-            await client.connect();
-            const database = client.db('simulados');
-            const collection = database.collection("users");
-            await collection.insertOne(doc);
-
-            res.json({ code })
-        } catch(err) {
-          console.dir(err)
-        } finally {
-            await client.close();
-        }
+        res.json({ code })
+    } catch(err) {
+      console.dir(err)
+    } finally {
+        await client.close();
     }
 }
 
