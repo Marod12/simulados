@@ -11,7 +11,7 @@ export default function HomePage() {
     const userName = process.browser ? localStorage.getItem('userName') : 'User';
 
     useEffect(() => {
-      axios.get(`http://localhost:3000/api/simulado`, { 
+      axios.get(`/api/simulado`, { 
         headers: {
           Authorization: userId,
         }

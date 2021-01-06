@@ -21,7 +21,7 @@ export default function EditUser() {
       };
 
       try {
-        await axios.put(`http://localhost:3000/api/user/${userId}`, data, { 
+        await axios.put(`/api/user/${userId}`, data, { 
           headers: {
             Authorization: userId,
           }

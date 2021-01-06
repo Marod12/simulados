@@ -23,7 +23,7 @@ export default function EditarQuestao() {
     const router = useRouter();
     
     useEffect(() => {
-      axios.get(`http://localhost:3000/api/questao/${questaoId}`, { 
+      axios.get(`/api/questao/${questaoId}`, { 
         headers: {
           Authorization: localStorage.getItem('userId'),
         }
@@ -35,7 +35,7 @@ export default function EditarQuestao() {
     }, [questaoId]);
 
     useEffect(() => {
-      axios.get(`http://localhost:3000/api/questao`, { 
+      axios.get(`/api/questao`, { 
         headers: {
           Authorization: userId,
         }
@@ -66,7 +66,7 @@ export default function EditarQuestao() {
       e.preventDefault();
 
       try { 
-        await axios.put(`http://localhost:3000/api/questao/${questaoId}`, data, {
+        await axios.put(`/api/questao/${questaoId}`, data, {
           headers: { 
             Authorization: localStorage.getItem('userId'),
           }

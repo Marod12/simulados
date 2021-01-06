@@ -25,7 +25,7 @@ const SimuladoPage: React.FC = () => {
     const simuladoId = process.browser ? localStorage.getItem('simuladoId') : '';
 
     useEffect(() => {
-      axios.get(`http://localhost:3000/api/simulado/${simuladoId}`, { 
+      axios.get(`/api/simulado/${simuladoId}`, { 
         headers: {
           Authorization: userId,
         }

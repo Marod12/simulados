@@ -13,7 +13,7 @@ export default function User() {
 
     async function handleDeleteUser() {
       try {
-        await axios.delete(`http://localhost:3000/api/user/${userId}`);
+        await axios.delete(`/api/user/${userId}`);
         alert('Usuário deletado');
         router.push('/');
       } catch(err) {

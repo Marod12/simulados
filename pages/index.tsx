@@ -14,7 +14,7 @@ export default function Login() {
       e.preventDefault();
 
       try {
-        const response = await axios.post(`http://localhost:3000/api/session`, { code });
+        const response = await axios.post(`/api/session`, { code });
         localStorage.setItem('userId', response.data._id);
         localStorage.setItem('userName', response.data.name);
         localStorage.setItem('userCode', response.data.code);

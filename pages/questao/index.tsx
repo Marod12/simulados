@@ -12,7 +12,7 @@ export default function Questoes() {
     const userName = process.browser ? localStorage.getItem('userName') : 'User';
 
     useEffect(() => {
-      axios.get(`http://localhost:3000/api/questao`, { 
+      axios.get(`/api/questao`, { 
         headers: {
           Authorization: userId,
         }
@@ -24,7 +24,7 @@ export default function Questoes() {
     async function handleDeleteQuestao(id, user) {
       if ( user === userId) {
         try { 
-          await axios.delete(`http://localhost:3000/api/questao/${id}`, {
+          await axios.delete(`/api/questao/${id}`, {
             headers: {
               Authorization: userId,
             }

@@ -32,7 +32,7 @@ export default function NovoSimuladoPage() {
     const router = useRouter();
 
     useEffect(() => {
-      axios.get(`http://localhost:3000/api/questao`, { 
+      axios.get(`/api/questao`, { 
         headers: {
           Authorization: userId,
         }
@@ -136,7 +136,7 @@ export default function NovoSimuladoPage() {
     async function handleSubmit() {
       /* Salvando no Banco de dados */
       try { 
-        await axios.post(`http://localhost:3000/api/simulado/new`, data, {
+        await axios.post(`/api/simulado/new`, data, {
           headers: { 
             Authorization: userId,
           }

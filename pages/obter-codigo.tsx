@@ -14,7 +14,7 @@ export default function ObterCodigoPage() {
       e.preventDefault();
       
       try {
-        const response = await axios.post(`http://localhost:3000/api/user`, { name });
+        const response = await axios.post(`/api/user`, { name });
         alert(`Seu ID de acesso: ${response.data.code}`);
         router.push('/');
       } catch (err) {

@@ -1,6 +1,6 @@
 import Head from 'next/head'
 import Link from 'next/link'
-import { FiArrowLeft, FiClipboard } from 'react-icons/fi'
+import { FiArrowLeft } from 'react-icons/fi'
 import { useState, useEffect } from 'react'
 import { useRouter } from 'next/router'
 import axios from 'axios'
@@ -22,7 +22,7 @@ export default function NovaQuestao() {
     const router = useRouter();
 
     useEffect(() => {
-      axios.get(`http://localhost:3000/api/questao`, { 
+      axios.get(`/api/questao`, { 
         headers: {
           Authorization: userId,
         }
@@ -53,7 +53,7 @@ export default function NovaQuestao() {
       e.preventDefault();
 
       try { 
-        await axios.post(`http://localhost:3000/api/questao/new`, data, {
+        await axios.post(`/api/questao/new`, data, {
           headers: { 
             Authorization: userId,
           }
