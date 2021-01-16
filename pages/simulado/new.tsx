@@ -41,6 +41,17 @@ export default function NovoSimuladoPage() {
       })
     }, [userId]);
 
+    const materiasUser = [];
+
+    questoes.forEach(courses)
+
+    function courses(item) {
+      const contem = item.materia
+      
+      if ( !materiasUser.includes(contem) ) {
+        materiasUser.push(item.materia);
+      }
+    }
   
     function startSimulado(e) {
       e.preventDefault();
@@ -52,26 +63,72 @@ export default function NovoSimuladoPage() {
       /*const formSimulado = document.querySelector('form[name="dadosSimulado"]');
       formSimulado.style.display = 'flex';*/
       setStyleDadosSimulado('flex');
-      
 
+      //** Faz a lista de matérias selecionadas */
+      const porMateria = [];
+
+      materiasUser.forEach(resps);
+
+      function resps(items) {
+        const materiaUser = document.querySelector(`#${items}:checked`);
+        materiaUser === null ? materiaUser : porMateria.push(materiaUser['value']);
+      }
+      //** Faz a lista de matérias selecionadas */
+
+      //** Faz a lista de questões por matérias */
+      const questoesPorMaterias = [];
+
+      questoes.forEach(materias);
+
+      function materias(item) {
+        if ( porMateria.includes(item.materia) ) {
+          questoesPorMaterias.push(item);
+        }
+      }
+      //** Faz a lista de questões por matérias */
+      
       //** Sortea as questões */
       const questoesSorteadas = [];
       const numeroSorteado = [];
+      const questoesSorteadasPorMateria = [];
+      const numeroSorteadoPorMateria = [];
 
       let contador = 1;
+      let contadorPorMateria = 1;
 
-      while (contador <= parseInt(qtQuestoes)) {
-      
+      if( questoesPorMaterias.length === 0 ) {
+        while (contador <= parseInt(qtQuestoes)) {
           const index = Math.floor(Math.random() * questoes.length);
 
-          if (!numeroSorteado.find(e => e === index) === true) {
+          if ( !numeroSorteado.includes(index) ) {
             questoesSorteadas.push(questoes[index]);
             contador ++;
           }
-
           numeroSorteado.push(index);
-      }
-      setQuestoesSimulado(questoesSorteadas);
+
+          if ( questoesSorteadas.length === questoes.length ) {
+            break;
+          }
+        }
+        setQuestoesSimulado(questoesSorteadas)
+      } else {
+        while (contadorPorMateria <= parseInt(qtQuestoes)) {
+          const indexPorMateria = Math.floor(Math.random() * questoesPorMaterias.length);
+
+          if ( !numeroSorteadoPorMateria.includes(indexPorMateria) ) {
+            questoesSorteadasPorMateria.push(questoesPorMaterias[indexPorMateria]);
+            contadorPorMateria ++;
+          }
+          numeroSorteadoPorMateria.push(indexPorMateria);
+
+          if ( questoesSorteadasPorMateria.length === questoesPorMaterias.length ) {
+            break;
+          }
+        }
+        setQuestoesSimulado(questoesSorteadasPorMateria)
+      }  
+
+      //questoesPorMaterias.length === 0 ? setQuestoesSimulado(questoesSorteadas) : setQuestoesSimulado(questoesSorteadasPorMateria) ;
       //** Sortea as questões */
     }
 
@@ -174,6 +231,22 @@ export default function NovoSimuladoPage() {
               required
               type="number"
               onChange={e => setQtQuestoes(e.target.value)} />
+            
+            <div className="my-4 container w-sm">
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-2">
+              {materiasUser.map(materia => (
+                <div key={materia}>
+                  <input name={materia} type="checkbox" value={materia}
+                    id={materia} className="inputRadio hidden" />
+                  <label id="labelRadio"
+                    className="w-auto md:w-auto block mx-8 sm:mx-auto focus:outline-none py-2 px-5 rounded-lg shadow-sm text-center text-gray-600 bg-white hover:bg-gray-100 font-medium border" 
+                    htmlFor={materia}>
+                      {materia}
+                  </label>
+                </div>
+              ))}  
+              </div>
+            </div>
 
             <button type="submit"
               className="mt-2 p-1.5 w-5/6 md:w-56 flex items-center justify-center rounded-md bg-black text-sm text-white hover:opacity-60">
