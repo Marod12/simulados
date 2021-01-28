@@ -42,17 +42,23 @@ export default function NovoSimuladoPage() {
     }, [userId]);
 
     const materiasUser = [];
+    const qtMaterias = [];
 
-    questoes.forEach(courses)
-
-    function courses(item) {
+    questoes.forEach( (item) => {
       const contem = item.materia
-      
+    
       if ( !materiasUser.includes(contem) ) {
         materiasUser.push(item.materia);
+        qtMaterias.push({ materia: item.materia, qt: 1 });
+      } else if ( materiasUser.includes(contem) ) {
+        qtMaterias.forEach( (i) => {
+          if ( i.materia === item.materia ) {
+            i.qt += 1
+          }
+        })
       }
-    }
-  
+    });
+
     function startSimulado(e) {
       e.preventDefault();
 
@@ -67,24 +73,21 @@ export default function NovoSimuladoPage() {
       //** Faz a lista de matérias selecionadas */
       const porMateria = [];
 
-      materiasUser.forEach(resps);
-
-      function resps(items) {
-        const materiaUser = document.querySelector(`#${items}:checked`);
-        materiaUser === null ? materiaUser : porMateria.push(materiaUser['value']);
-      }
+      materiasUser.forEach((item) => {
+        if ( document.querySelector(`#${item.replace(' ', '_')}:checked`) !== null ) {
+          porMateria.push(item);
+        }
+      })
       //** Faz a lista de matérias selecionadas */
 
       //** Faz a lista de questões por matérias */
       const questoesPorMaterias = [];
 
-      questoes.forEach(materias);
-
-      function materias(item) {
+      questoes.forEach( (item) => {
         if ( porMateria.includes(item.materia) ) {
           questoesPorMaterias.push(item);
         }
-      }
+      })
       //** Faz a lista de questões por matérias */
       
       //** Sortea as questões */
@@ -234,14 +237,14 @@ export default function NovoSimuladoPage() {
             
             <div className="my-4 container w-sm">
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-2">
-              {materiasUser.map(materia => (
-                <div key={materia}>
-                  <input name={materia} type="checkbox" value={materia}
-                    id={materia} className="inputRadio hidden" />
+              {qtMaterias.map(materia => (
+                <div key={materia.materia.replace(' ', '_')}>
+                  <input name={materia.materia.replace(' ', '_')} type="checkbox" value={materia.materia}
+                    id={materia.materia.replace(' ', '_')} className="inputRadio hidden" />
                   <label id="labelRadio"
                     className="w-auto md:w-auto block mx-8 sm:mx-auto focus:outline-none py-2 px-5 rounded-lg shadow-sm text-center text-gray-600 bg-white hover:bg-gray-100 font-medium border" 
-                    htmlFor={materia}>
-                      {materia}
+                    htmlFor={materia.materia.replace(' ', '_')}>
+                      {materia.qt} - {materia.materia}
                   </label>
                 </div>
               ))}  
