@@ -1,5 +1,5 @@
 import Link from 'next/link'
-import { FiPower, FiCalendar, FiClipboard } from 'react-icons/fi'
+import { FiPower } from 'react-icons/fi'
 import { useRouter } from 'next/router';
 
 interface HeaderProps {

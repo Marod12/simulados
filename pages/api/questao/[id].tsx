@@ -30,7 +30,12 @@ async function handler(req, res) {
   
     const client = new MongoClient(process.env.MONGO_URL);
 
-    const user_id = req.headers.authorization;
+    const crypto = require('crypto');
+    const decipher = crypto.createDecipher('aes256', 'Hi Ron');
+    let dexx = decipher.update(req.headers.authorization, 'hex', 'utf8');
+    dexx += decipher.final('utf8');
+
+    const user_id = dexx;
     const idObj = new ObjectID(id);
 
     switch (method) {
@@ -43,7 +48,17 @@ async function handler(req, res) {
 
             const result = await collection.findOne({ _id: { $eq: idObj } });
 
-            res.json(result)
+            if (`${result.user}` === user_id) {
+              res.json({
+                _id: result._id,
+                materia: result.materia,
+                questao: result.questao,
+                resposta: result.resposta
+              })
+            } else {
+              res.status(400);
+            }
+
         } catch(err) {
           console.dir(err)
         } finally {
@@ -62,7 +77,17 @@ async function handler(req, res) {
             await collection.updateOne( { _id: { $eq: idObj } }, {$set: { questao: questao, resposta: resposta, materia: materia }}, { multi: true } );
             
             const result = await collection.findOne({ _id: { $eq: idObj } });
-            res.json(result)
+            
+            if (`${result.user}` === user_id) {
+              res.json({
+                _id: result._id,
+                materia: result.materia,
+                questao: result.questao,
+                resposta: result.resposta
+              })
+            } else {
+              res.status(400);
+            }
         } catch(err) {
           console.dir(err)
         } finally {
@@ -76,8 +101,14 @@ async function handler(req, res) {
           const database = client.db('simulados');
           const collection = database.collection("questoes");
 
-          await collection.deleteOne({ _id: { $eq: idObj } });
-          res.status(200).json({ message: 'Questão deletada com sucesso'});
+          const result = await collection.findOne({ _id: { $eq: idObj } });
+
+          if (`${result.user}` === user_id) {
+            await collection.deleteOne({ _id: { $eq: idObj } });
+            res.status(200).json({ message: 'Questão deletada com sucesso'});
+          } else {
+            res.status(400);
+          }
         } catch(err) {
           console.dir(err)
         } finally {

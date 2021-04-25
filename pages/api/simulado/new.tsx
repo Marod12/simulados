@@ -32,7 +32,13 @@ function runMiddleware(req, res, fn) {
 async function handler(req, res) {
   await runMiddleware(req, res, cors)
     const { title, qtQuestoes, nota, qCorretas, qErradas, qNull } = req.body;
-    const user_id = req.headers.authorization;
+    
+    const cryptod = require('crypto');
+    const decipher = cryptod.createDecipher('aes256', 'Hi Ron');
+    let dexx = decipher.update(req.headers.authorization, 'hex', 'utf8');
+    dexx += decipher.final('utf8');
+    
+    const user_id = dexx;
 
     const qCQuerry = [];
     const qEQuerry = [];
@@ -58,10 +64,6 @@ async function handler(req, res) {
       const data = { questao: n_id, pergunta: i.pergunta, resposta: i.resposta, minhaResposta: i.minhaResposta, materia: i.materia };     
       qNQuerry.push(data);
     }
-    
-    //console.log(qCQuerry);
-    //console.log(qEQuerry);
-    //console.log(qNQuerry);
 
     const query = { _id: new ObjectID, user: new ObjectID(user_id), title: title, qtQuestoes: qtQuestoes, nota: nota, qCorretas: qCQuerry, qErradas: qEQuerry, qNull: qNQuerry };
 

@@ -23,7 +23,12 @@ function runMiddleware(req, res, fn) {
 async function handler(req, res) {
   // Run the middleware
   await runMiddleware(req, res, cors)
-    const user_id = req.headers.authorization;
+    const crypto = require('crypto');
+    const decipher = crypto.createDecipher('aes256', 'Hi Ron');
+    let dexx = decipher.update(req.headers.authorization, 'hex', 'utf8');
+    dexx += decipher.final('utf8');
+
+    const user_id = dexx;
 
     const { MongoClient } = require("mongodb");
 

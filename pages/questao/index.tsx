@@ -21,20 +21,16 @@ export default function Questoes() {
       })
     }, [userId]);
 
-    async function handleDeleteQuestao(id, user) {
-      if ( user === userId) {
-        try { 
-          await axios.delete(`/api/questao/${id}`, {
-            headers: {
-              Authorization: userId,
-            }
-          });
+    async function handleDeleteQuestao(id) {
+      try { 
+        await axios.delete(`/api/questao/${id}`, {
+          headers: {
+            Authorization: userId,
+          }
+        });
 
-          setQuestoes(questoes.filter(questao => questao._id !== id));
-        } catch (err) {
-          alert('Erro ao deletar questão');
-        }
-      } else {
+        setQuestoes(questoes.filter(questao => questao._id !== id));
+      } catch (err) {
         alert('Erro ao deletar questão');
       }
     } 
@@ -85,7 +81,7 @@ export default function Questoes() {
                       <FiTrash2 
                         className="ml-auto hover:opacity-50" 
                         size={15}
-                        onClick={() => handleDeleteQuestao(questao._id, questao.user)}
+                        onClick={() => handleDeleteQuestao(questao._id)}
                       />
                     </div>
                     

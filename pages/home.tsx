@@ -67,13 +67,6 @@ export default function HomePage() {
                   <h1 className="mt-4 text-center text-4xl italic">
                     {simulado.nota}
                   </h1>
-
-                  {/*<div className="w-full mt-4 flex items-center text-sm">
-                    <p>{simulado.qCorretas.length}</p>
-                    <p className="ml-auto">
-                      {simulado.qtQuestoes}
-                    </p>
-                  </div> */}
                 </a>
                 </Link>
               </li>

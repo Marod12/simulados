@@ -31,16 +31,21 @@ async function handler(req, res) {
     const client = new MongoClient(process.env.MONGO_URL);
 
     const user_id = req.headers.authorization;
-    const idObj = new ObjectID(id);
+
+    if ( user_id !== id ) {
+      res.status(401).json({ error: 'Operation not permitted.' });
+    } else {
+      const crypto = require('crypto');
+      const decipher = crypto.createDecipher('aes256', 'Hi Ron');
+      let dexx = decipher.update(id, 'hex', 'utf8');
+      dexx += decipher.final('utf8');
+
+      var idObj = new ObjectID(dexx);
+    }
 
     switch (method) {
       // Get
       case 'GET':
-        if ( user_id !== id ) {
-          res.status(401).json({ error: 'Operation not permitted.' });
-          break;
-        }
-
         try {
             await client.connect();
             const database = client.db('simulados');
@@ -48,7 +53,9 @@ async function handler(req, res) {
 
             const result = await collection.findOne({ _id: { $eq: idObj } });
 
-            res.json(result)
+            res.json({
+              code: result.code
+            })
         } catch(err) {
           console.dir(err)
         } finally {

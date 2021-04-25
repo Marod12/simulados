@@ -3,13 +3,24 @@ import Link from 'next/link'
 import { FiEdit3, FiTrash2, FiArrowLeft } from 'react-icons/fi'
 import axios from 'axios'
 import { useRouter } from 'next/router';
+import { useState, useEffect } from 'react'
 
 export default function User() { 
     const userId = process.browser ? localStorage.getItem('userId') : '';
     const userName = process.browser ? localStorage.getItem('userName') : 'User';
-    const userCode = process.browser ? localStorage.getItem('userCode') : '';
+    const [userCode, setUserCode] =  useState('');
 
     const router = useRouter();
+
+    useEffect(() => {
+      axios.get(`/api/user/${userId}`, { 
+        headers: {
+          Authorization: userId,
+        }
+      }).then(response => {
+        setUserCode(response.data.code);
+      })
+    }, [userId]);
 
     async function handleDeleteUser() {
       try {

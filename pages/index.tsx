@@ -17,7 +17,6 @@ export default function Login() {
         const response = await axios.post(`/api/session`, { code });
         localStorage.setItem('userId', response.data._id);
         localStorage.setItem('userName', response.data.name);
-        localStorage.setItem('userCode', response.data.code);
         router.push('/home');
       } catch (err) {
         alert('Falha no login, tente novamente.');

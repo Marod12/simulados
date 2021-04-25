@@ -36,10 +36,18 @@ async function handler(req, res) {
         const result = await collection.findOne({ code: { $eq: code } });
 
         if (!result) {
-            res.status(400).json({ error: 'Não encotramos nenhum usuario com esse Código' });
+            res.status(400);
         }
+        
+        const crypto = require('crypto');
+        const cipher = crypto.createCipher('aes256', 'Hi Ron');
+        let paxx = cipher.update(`${result._id}`, 'utf8', 'hex');
+        paxx += cipher.final('hex')
 
-        res.json(result)
+        res.json({
+          _id: paxx,
+          name: result.name
+        })
     } catch(err) {
       console.dir(err)
     } finally {

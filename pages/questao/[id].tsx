@@ -64,15 +64,14 @@ export default function EditarQuestao() {
 
     async function handleEditarQuestao(e) {
       e.preventDefault();
-
       try { 
         await axios.put(`/api/questao/${questaoId}`, data, {
           headers: { 
             Authorization: localStorage.getItem('userId'),
           }
         });
-        router.push('/questao');
         localStorage.removeItem('questaoId');
+        router.push('/questao');
       } catch (err) {
         alert('Erro ao editar questão');
       }
