@@ -41,8 +41,18 @@ async function handler(req, res) {
 
         const result = await collection.find({ user: { $eq: new ObjectID(user_id) } }).toArray();
 
-        res.json(result);
-        
+        const retorno = []
+
+        result.forEach(item => {
+          retorno.push({
+            _id: item._id,
+            materia: item.materia,
+            questao: item.questao
+          })
+        })
+
+        res.json(retorno)
+
     } catch(err) {
       console.dir(err)
     } finally {
