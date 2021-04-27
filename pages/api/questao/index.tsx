@@ -47,7 +47,8 @@ async function handler(req, res) {
           retorno.push({
             _id: item._id,
             materia: item.materia,
-            questao: item.questao
+            questao: item.questao,
+            resposta: item.resposta
           })
         })
 
